@@ -28,8 +28,21 @@ func execute(e *echo.Echo) {
 
 		data := struct {
 			Contents string
+			Page string
 		} {
 			Contents: "ページのコンテンツ",
+			Page: "index",
+		}
+		return c.Render(http.StatusOK, "layout", data)
+	})
+
+	e.GET("/poi/", func(c echo.Context) error {
+		data := struct {
+			Contents string
+			Page string
+		} {
+			Contents: "ポイする",
+			Page: "poi",
 		}
 		return c.Render(http.StatusOK, "layout", data)
 	})

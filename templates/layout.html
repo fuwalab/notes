@@ -1,11 +1,46 @@
 {{ define "layout" }}<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-  <link rel="stylesheet" media="all" href="/css/pure-min.css">
+    <meta charset="UTF-8">
+    <title>Notes | ウェブに残せるちょっとしたメモ帳</title>
+    <link rel="stylesheet" media="all" href="/css/pure-min.css">
+    <link rel="stylesheet" media="all" href="/css/marketing.css">
+    <link rel="stylesheet" media="all" href="/css/style.css">
 </head>
 <body>
-{{ template "Contents" . }}
+<div class="header">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+        <a class="pure-menu-heading" href="/">Notes</a>
+
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item"><a href="/poi/" class="pure-menu-link">ポイする</a></li>
+            <li class="pure-menu-item"><a href="https://github.com/fuwalab/notes" class="pure-menu-link" target="_blank">Github</a></li>
+        </ul>
+    </div>
+</div>
+{{ if eq .Page "index" }}
+<div class="splash-container">
+    <div class="splash">
+        <h1 class="splash-head">ちょいメモ、始めよう</h1>
+        <p class="splash-subhead">
+            しっかり残すほどでもないけど、ちょっとだけ必要なことをメモしよう
+        </p>
+        <p>
+            <a href="/poi/" class="pure-button pure-button-primary">ポイする</a>
+        </p>
+    </div>
+</div>
+{{ end }}
+{{ if eq .Page "poi" }}
+    {{ template "poi" }}
+{{ end }}
+<div class="content-wrapper">
+    {{ if eq .Page "index" }}
+        {{ template "index" }}
+    {{ end }}
+    <div class="footer l-box is-center">
+        &copy; 2018 fuwalab. All Rights Reserved.
+    </div>
+</div>
 </body>
 </html>{{ end }}
