@@ -2,28 +2,25 @@ package main
 
 import (
 	"github.com/labstack/echo"
-	"gopkg.in/mgo.v2"
 	"fmt"
-	"gopkg.in/mgo.v2/bson"
 	"net/http"
+	"notes/db"
+	"notes/models"
 )
-
-type User struct {
-	Name string
-	Note string
-	IP   *string
-}
 
 func execute(e *echo.Echo) {
 	e.GET("/", func(c echo.Context) error {
-		session, _ := mgo.Dial("mongo")
-		db := session.DB("drafts")
+		con := db.Connect()
 
-		var results []User
-		db.C("users").Find(bson.M{}).All(&results)
+		results := models.NewRepo(con).GetAllNotes()
 
 		for _, c := range results {
-			fmt.Printf("retrieve from mongodb: %v\n", c)
+			fmt.Printf("%v\n", c.ID)
+			fmt.Printf("%v\n", *c.Title)
+			fmt.Printf("%v\n", c.Content)
+			fmt.Printf("%v\n", c.CreatedAt)
+			fmt.Printf("%v\n", *c.UA)
+			fmt.Printf("%v\n", *c.IP)
 		}
 
 		data := struct {
