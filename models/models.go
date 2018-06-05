@@ -6,8 +6,7 @@ import (
 )
 
 type Note struct {
-	ObjectID bson.ObjectId `bson:"_id,omitempty"`
-	ID string `bson:"ID,omitempty"`
+	ID bson.ObjectId `bson:"_id,omitempty"`
 	Title *string `bson:"Title"`
 	Content string `bson:"Content,omitempty"`
 	UA *string `bson:"UA"`

@@ -36,13 +36,29 @@ func execute(e *echo.Echo) {
 
 	// Show Poi index page.
 	e.GET("/poi/", func(c echo.Context) error {
-		data := usecase.GetPoiIndex()
+		data := usecase.GetPoiIndex(c)
 		return c.Render(http.StatusOK, "layout", data)
 	})
 
 	// Show Poi detail page
-	e.GET("/poi/:id/", func(c echo.Context) error {
+	e.GET("/poi/:id", func(c echo.Context) error {
 		data := usecase.GetPoiDetail(c)
+		return c.Render(http.StatusOK, "layout", data)
+	})
+
+	// Post Poi data
+	e.POST("/poi/", func(c echo.Context) error {
+		note := usecase.PostPoiDetail(c)
+		data := struct {
+			Contents string
+			Note *models.Note
+			Page string
+		} {
+			Contents: "ページのコンテンツ",
+			Note: note,
+			Page: "poi_detail",
+		}
+
 		return c.Render(http.StatusOK, "layout", data)
 	})
 }
