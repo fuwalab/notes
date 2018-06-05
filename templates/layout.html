@@ -34,6 +34,22 @@
 {{ if eq .Page "poi" }}
     {{ template "poi" }}
 {{ end }}
+{{ if eq .Page "poi_detail" }}
+    {{ template "poi_detail" }}
+    <div class="content">
+        <div class="pure-g">
+            <div class="l-box-lrg pure-u-1 pure-u-md-3-5">
+                <h4>お問い合わせ</h4>
+                <p>
+                {{ .Note.Title }}
+                </p>
+                <p>
+                {{ .Note.Content }}
+                </p>
+            </div>
+        </div>
+    </div>
+{{ end }}
 <div class="content-wrapper">
     {{ if eq .Page "index" }}
         {{ template "index" }}

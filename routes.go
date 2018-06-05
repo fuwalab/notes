@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"notes/db"
 	"notes/models"
+	"notes/usecase"
 )
 
 func execute(e *echo.Echo) {
@@ -33,14 +34,15 @@ func execute(e *echo.Echo) {
 		return c.Render(http.StatusOK, "layout", data)
 	})
 
+	// Show Poi index page.
 	e.GET("/poi/", func(c echo.Context) error {
-		data := struct {
-			Contents string
-			Page string
-		} {
-			Contents: "ポイする",
-			Page: "poi",
-		}
+		data := usecase.GetPoiIndex()
+		return c.Render(http.StatusOK, "layout", data)
+	})
+
+	// Show Poi detail page
+	e.GET("/poi/:id/", func(c echo.Context) error {
+		data := usecase.GetPoiDetail(c)
 		return c.Render(http.StatusOK, "layout", data)
 	})
 }
