@@ -2,4 +2,15 @@ package: .
 import:
 - package: github.com/labstack/echo
   version: 3.3.5
-- package: github.com/dgrijalva/jwt-go
+  subpackages:
+  - middleware
+- package: github.com/rs/xid
+  version: v1.2.0
+- package: gopkg.in/mgo.v2
+  subpackages:
+  - bson
+ignore:
+- notes/config
+- notes/db
+- notes/models
+- notes/usecase
