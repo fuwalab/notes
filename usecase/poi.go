@@ -55,12 +55,20 @@ func PostPoiDetail(c echo.Context) *models.Note {
 	note.ID = idObject.String()
 
 	title := requests.FormValue("title")
-	note.Title = &title
+	if title == "" {
+		note.Title = nil
+	} else {
+		note.Title = &title
+	}
 
 	note.Content = requests.FormValue("content")
 	note.IP = &requests.RemoteAddr
 	note.CreatedAt = time.Now()
 	note.ExpireAt = time.Now().AddDate(0, 0, 7)
+
+	if note.Content == "" {
+		return nil
+	}
 
 	con := db.Connect()
 	if models.NewRepo(con).PostNote(&note) {

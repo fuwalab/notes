@@ -34,7 +34,11 @@ func execute(e *echo.Echo) {
 
 	// Post Poi data
 	e.POST("/poi/", func(c echo.Context) error {
+		var id string
 		note := usecase.PostPoiDetail(c)
-		return c.Redirect(http.StatusMovedPermanently, "/poi/"+note.ID)
+		if note != nil {
+			id = note.ID
+		}
+		return c.Redirect(http.StatusMovedPermanently, "/poi/"+id)
 	})
 }

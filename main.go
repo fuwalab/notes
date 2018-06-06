@@ -29,6 +29,7 @@ func main() {
 	}
 
 	e.Static("/", "src/notes/static")
+	e.File("/favicon.ico", "src/notes/static/images/favicon.ico")
 
 	execute(e)
 
