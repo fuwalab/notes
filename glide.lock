@@ -1,5 +1,5 @@
-hash: 66eb545e94da01b7257fa00df8c9a007cf5d6999db88eb748e9d4d2bc52510b8
-updated: 2018-06-01T16:43:01.698307+09:00
+hash: ea9519709bd83ed988b39250e097475833b750d4d4180231f64df54895ddad58
+updated: 2018-06-06T15:38:38.938767+09:00
 imports:
 - name: github.com/dgrijalva/jwt-go
   version: 06ea1031745cb8b3dab3f6a236daf2b0aa468b7e
@@ -18,12 +18,14 @@ imports:
   version: efa589957cd060542a26d2dd7832fd6a6c6c3ade
 - name: github.com/mattn/go-isatty
   version: 6ca4dbf54d38eea1a992b3c722a76a5d1c4cb25c
+- name: github.com/rs/xid
+  version: 2c7e97ce663ff82c49656bca3048df0fdd83c5f9
 - name: github.com/valyala/bytebufferpool
   version: e746df99fe4a3986f4d4f79e13c1e0117ce9c2f7
 - name: github.com/valyala/fasttemplate
   version: dcecefd839c4193db0d35b88ec65b4c12d360ab0
 - name: golang.org/x/crypto
-  version: ab813273cd59e1333f7ae7bff5d027d4aadf528c
+  version: b47b1587369238182299fe4dad77d05b8b461e06
   subpackages:
   - acme
   - acme/autocert
@@ -31,6 +33,7 @@ imports:
   version: c11f84a56e43e20a78cee75a7c034031ecf57d1f
   subpackages:
   - unix
+  - windows
 - name: gopkg.in/mgo.v2
   version: 3f83fa5005286a7fe593b055f0d7771a7dce4655
   subpackages:

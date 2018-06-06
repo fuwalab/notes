@@ -10,11 +10,11 @@ func main() {
 	e.Renderer = loadTemplate()
 	e.Use(middleware.Gzip())
 	e.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
-		TokenLength: 32,
-		TokenLookup: "form:csrftoken",
-		ContextKey: "csrf",
-		CookieName: "_csrf",
-		CookieMaxAge: 86400,
+		TokenLength:  32,
+		TokenLookup:  "form:csrftoken",
+		ContextKey:   "csrf",
+		CookieName:   "_csrf",
+		CookieMaxAge: 30 * 60,
 	}))
 
 	e.Static("/", "src/notes/static")

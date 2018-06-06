@@ -1,12 +1,13 @@
 package models
 
 import (
+	"github.com/labstack/gommon/log"
 	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 )
 
 type Repo struct {
 	db *mgo.Database
-
 }
 
 func NewRepo(con *mgo.Database) *Repo {
@@ -18,6 +19,21 @@ func (r *Repo) GetAllNotes() (results []*Note) {
 	err := r.db.C("notes").Find(nil).All(&results)
 	if err != nil {
 		panic(err.Error())
+	}
+	return
+}
+
+// Retrieve note
+func (r *Repo) FindByID(id string) (ret *Note) {
+	err := r.db.C("notes").Find(bson.M{
+		"ID": bson.M{
+			"$eq": id,
+		},
+	}).One(&ret)
+
+	if err != nil {
+		log.Error(err.Error())
+		return nil
 	}
 	return
 }

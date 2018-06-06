@@ -1,52 +1,44 @@
 package usecase
 
 import (
-	"notes/models"
-	"github.com/labstack/echo"
-	"notes/db"
-	"time"
 	"fmt"
+	"github.com/labstack/echo"
+	"github.com/rs/xid"
+	"notes/db"
+	"notes/models"
+	"time"
 )
 
 // Show Index
 func GetPoiIndex(c echo.Context) (data interface{}) {
-	fmt.Printf("%v\n",  c.Get("csrf"))
+	fmt.Printf("%v\n", c.Get("csrf"))
 	data = struct {
-		Contents string
+		Contents  string
 		CSRFToken string
-		Page string
-	} {
-		Contents: "ポイする",
+		Page      string
+	}{
+		Contents:  "ポイする",
 		CSRFToken: c.Get("csrf").(string),
-		Page: "poi",
+		Page:      "poi",
 	}
 	return
 }
 
 type PoiData struct {
 	Contents string
-	Note models.Note
-	Page string
+	Note     *models.Note
+	Page     string
 }
 
 // Get Poi detail
 func GetPoiDetail(c echo.Context) (data PoiData) {
-	//params := c.Param("id")
-	//requests := c.Request()
-	//fmt.Printf("params: %v\n", params)
-	//fmt.Printf("requests: %v\n", requests)
+	id := c.Param("id")
+	note := models.NewRepo(db.Connect()).FindByID(id)
 
-	title := "サンプルだよ"
-	note := models.Note{
-		ID: "xxx",
-		Title: &title,
-		Content: "hogeっていうかこれがコンテンツだよ。",
-	}
-
-	data = PoiData {
+	data = PoiData{
 		Contents: "ポイする",
-		Note: note,
-		Page: "poi_detail",
+		Note:     note,
+		Page:     "poi_detail",
 	}
 	return
 }
@@ -59,6 +51,9 @@ func PostPoiDetail(c echo.Context) *models.Note {
 
 	ua := requests.UserAgent()
 	note.UA = &ua
+
+	idObject := xid.New()
+	note.ID = idObject.String()
 
 	title := requests.FormValue("title")
 	note.Title = &title

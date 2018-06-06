@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/labstack/echo"
 	"fmt"
+	"github.com/labstack/echo"
 	"net/http"
 	"notes/db"
 	"notes/models"
@@ -26,10 +26,10 @@ func execute(e *echo.Echo) {
 
 		data := struct {
 			Contents string
-			Page string
-		} {
+			Page     string
+		}{
 			Contents: "ページのコンテンツ",
-			Page: "index",
+			Page:     "index",
 		}
 		return c.Render(http.StatusOK, "layout", data)
 	})
@@ -43,22 +43,16 @@ func execute(e *echo.Echo) {
 	// Show Poi detail page
 	e.GET("/poi/:id", func(c echo.Context) error {
 		data := usecase.GetPoiDetail(c)
+		if data.Note == nil {
+			// FIXME: should be prepared error page
+			return c.NoContent(http.StatusNotFound)
+		}
 		return c.Render(http.StatusOK, "layout", data)
 	})
 
 	// Post Poi data
 	e.POST("/poi/", func(c echo.Context) error {
 		note := usecase.PostPoiDetail(c)
-		data := struct {
-			Contents string
-			Note *models.Note
-			Page string
-		} {
-			Contents: "ページのコンテンツ",
-			Note: note,
-			Page: "poi_detail",
-		}
-
-		return c.Render(http.StatusOK, "layout", data)
+		return c.Redirect(http.StatusMovedPermanently, "/poi/"+note.ID)
 	})
 }
