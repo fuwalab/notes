@@ -47,3 +47,13 @@ ul > li {
 .error p {
   margin-top: 5em;
 }
+.github {
+  padding: 0;
+}
+.github img {
+  vertical-align: sub;
+}
+
+.pure-menu.pure-menu-fixed {
+  line-height: initial;
+}
