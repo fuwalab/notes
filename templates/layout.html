@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Notes | ウェブに残せるちょっとしたメモ帳</title>
+    <title>/tmp/Notes | ウェブに残せるちょっとしたメモ帳</title>
     <link rel="stylesheet" media="all" href="/css/pure-min.css">
     <link rel="stylesheet" media="all" href="/css/marketing.css">
     <link rel="stylesheet" media="all" href="/css/style.css">
@@ -10,7 +10,7 @@
 <body>
 <div class="header">
     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-        <a class="pure-menu-heading" href="/">Notes</a>
+        <a class="pure-menu-heading" href="/">/tmp/notes</a>
 
         <ul class="pure-menu-list">
             <li class="pure-menu-item"><a href="/poi/" class="pure-menu-link">ポイする</a></li>
@@ -51,10 +51,24 @@
     <div class="content">
         <div class="pure-g">
             <div class="l-box-lrg pure-u-1 pure-u-md-3-5">
-                <h4>{{ .Note.Title }}</h4>
-                <p>
-                {{ .Note.Content | nl2br }}
-                </p>
+                <ul>
+                    <li>
+                        <h2>{{ .Note.Title }}</h2>
+                    </li>
+                    <li>
+                        <a href="http://line.me/R/msg/text/?{{ .URL }}" target="_blank">
+                            <img src="/images/line120.png" alt="LINE でシェアする" width="30">
+                        </a>
+                    </li>
+                    <li>
+                        <small>
+                            表示期間：{{ .Note.CreatedAt | date }}〜{{ .Note.ExpireAt | date }}
+                        </small>
+                    </li>
+                    <li>
+                        <p>{{ .Note.Content | nl2br }}</p>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

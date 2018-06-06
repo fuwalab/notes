@@ -31,3 +31,10 @@ textarea {
   height: 200px;
 }
 
+.pure-menu-heading, .content-head {
+  text-transform: none;
+}
+
+ul > li {
+  list-style: none;
+}

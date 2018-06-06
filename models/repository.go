@@ -4,6 +4,7 @@ import (
 	"github.com/labstack/gommon/log"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
+	"time"
 )
 
 type Repo struct {
@@ -28,6 +29,9 @@ func (r *Repo) FindByID(id string) (ret *Note) {
 	err := r.db.C("notes").Find(bson.M{
 		"ID": bson.M{
 			"$eq": id,
+		},
+		"ExpireAt": bson.M{
+			"$gte": time.Now(),
 		},
 	}).One(&ret)
 

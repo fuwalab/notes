@@ -12,5 +12,6 @@ type Note struct {
 	Content   string        `bson:"Content,omitempty"`
 	UA        *string       `bson:"UA"`
 	IP        *string       `bson:"IP"`
+	ExpireAt  time.Time     `bson:"ExpireAt,omitempty"`
 	CreatedAt time.Time     `bson:"CreatedAt,omitempty"`
 }

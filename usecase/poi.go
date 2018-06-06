@@ -22,6 +22,7 @@ func GetPoiIndex(c echo.Context) (data interface{}) {
 
 type PoiData struct {
 	Note *models.Note
+	URL  string
 	Page string
 }
 
@@ -30,8 +31,12 @@ func GetPoiDetail(c echo.Context) (data PoiData) {
 	id := c.Param("id")
 	note := models.NewRepo(db.Connect()).FindByID(id)
 
+	request := c.Request()
+	path := "://" + request.Host + request.RequestURI
+
 	data = PoiData{
 		Note: note,
+		URL:  path,
 		Page: "poi_detail",
 	}
 	return
@@ -55,10 +60,10 @@ func PostPoiDetail(c echo.Context) *models.Note {
 	note.Content = requests.FormValue("content")
 	note.IP = &requests.RemoteAddr
 	note.CreatedAt = time.Now()
+	note.ExpireAt = time.Now().AddDate(0, 0, 7)
 
 	con := db.Connect()
 	if models.NewRepo(con).PostNote(&note) {
-		//c.SetCookie(&http.Cookie{Name: "_csrf", Value: ""})
 		return &note
 	}
 	return nil
