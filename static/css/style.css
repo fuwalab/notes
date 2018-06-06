@@ -38,3 +38,12 @@ textarea {
 ul > li {
   list-style: none;
 }
+
+.error {
+  margin: 1em auto 0;
+  font-size: 20em;
+}
+
+.error p {
+  margin-top: 5em;
+}

@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
+	"net/http"
 )
 
 func main() {
@@ -16,6 +17,16 @@ func main() {
 		CookieName:   "_csrf",
 		CookieMaxAge: 30 * 60,
 	}))
+
+	e.HTTPErrorHandler = func(err error, c echo.Context) {
+		if he, ok := err.(*echo.HTTPError); ok {
+			if he.Code == 404 {
+				c.Render(http.StatusNotFound, "404", nil)
+			} else {
+				c.Render(http.StatusInternalServerError, "500", nil)
+			}
+		}
+	}
 
 	e.Static("/", "src/notes/static")
 

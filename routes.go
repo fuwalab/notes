@@ -27,8 +27,7 @@ func execute(e *echo.Echo) {
 	e.GET("/poi/:id", func(c echo.Context) error {
 		data := usecase.GetPoiDetail(c)
 		if data.Note == nil {
-			// FIXME: should be prepared error page
-			return c.NoContent(http.StatusNotFound)
+			return c.Render(http.StatusNotFound, "404", nil)
 		}
 		return c.Render(http.StatusOK, "layout", data)
 	})
