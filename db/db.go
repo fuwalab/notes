@@ -8,7 +8,7 @@ import (
 
 func Connect() (db *mgo.Database) {
 	mongoInfo := &mgo.DialInfo{
-		Addrs:    []string{"mongo"},
+		Addrs:    []string{config.DBAddr},
 		Timeout:  60 * time.Second,
 		Database: config.DBName,
 		Username: config.DBUser,
