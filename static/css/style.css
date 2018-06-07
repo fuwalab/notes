@@ -55,5 +55,5 @@ ul > li {
 }
 
 .pure-menu.pure-menu-fixed {
-  line-height: initial;
+  line-height: 100%;
 }
