@@ -79,7 +79,7 @@ func PostPoiDetail(c echo.Context) *models.Note {
 	note.Content = requests.FormValue("content")
 	note.IP = &requests.RemoteAddr
 	note.CreatedAt = time.Now()
-	note.ExpireAt = time.Now().AddDate(0, 0, 6)
+	note.ExpireAt = time.Now().AddDate(0, 0, 7)
 
 	if note.Content == "" {
 		return nil
