@@ -8,22 +8,32 @@ import (
 	"time"
 )
 
+type Header struct {
+	Title       string
+	Keywords    string
+	Description string
+}
+
+type PoiData struct {
+	HeaderInfo Header
+	CSRFToken  string
+	Note       *models.Note
+	URL        string
+	Page       string
+}
+
 // Show Index
-func GetPoiIndex(c echo.Context) (data interface{}) {
-	data = struct {
-		CSRFToken string
-		Page      string
-	}{
+func GetPoiIndex(c echo.Context) (data PoiData) {
+	data = PoiData{
+		HeaderInfo: Header{
+			Title:       "ポイペ | /tmp/notes",
+			Keywords:    "テンプノート,/tmp/notes,一週間,期間限定,メモ,ノート,memo,note,7日間,OSS,オープンソース,ポイ,簡易メモ帳,共有,シェア,WEB,ウェブ,投稿,ポイする,ポイペ",
+			Description: "表示期間限定型ウェブメモ帳「/tmp/notes（テンプノート）」のポイペ（メモ帳投稿ページ）です",
+		},
 		CSRFToken: c.Get("csrf").(string),
 		Page:      "poi",
 	}
 	return
-}
-
-type PoiData struct {
-	Note *models.Note
-	URL  string
-	Page string
 }
 
 // Get Poi detail
@@ -35,6 +45,11 @@ func GetPoiDetail(c echo.Context) (data PoiData) {
 	path := "://" + request.Host + request.RequestURI
 
 	data = PoiData{
+		HeaderInfo: Header{
+			Title:       "ポイショ | /tmp/notes",
+			Keywords:    "テンプノート,/tmp/notes,一週間,期間限定,メモ,ノート,memo,note,7日間,OSS,オープンソース,ポイ,簡易メモ帳,共有,シェア,WEB,ウェブ,投稿,ポイ詳細,ポイショ",
+			Description: "表示期間限定型ウェブメモ帳「/tmp/notes（テンプノート）」のポイショ（メモ帳詳細ページ）です",
+		},
 		Note: note,
 		URL:  path,
 		Page: "poi_detail",
@@ -64,7 +79,7 @@ func PostPoiDetail(c echo.Context) *models.Note {
 	note.Content = requests.FormValue("content")
 	note.IP = &requests.RemoteAddr
 	note.CreatedAt = time.Now()
-	note.ExpireAt = time.Now().AddDate(0, 0, 7)
+	note.ExpireAt = time.Now().AddDate(0, 0, 6)
 
 	if note.Content == "" {
 		return nil

@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>/tmp/Notes | ウェブに残せるちょっとしたメモ帳</title>
+    <meta name="keywords" content="{{ .HeaderInfo.Keywords }}">
+    <meta name="description" content="{{ .HeaderInfo.Description }}">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    {{ if eq .Page "poi_detail"}}<meta name="robots" content="noindex">{{ end }}
+    <title>{{ .HeaderInfo.Title }}</title>
     <link rel="stylesheet" media="all" href="/css/pure-min.css">
     <link rel="stylesheet" media="all" href="/css/marketing.css">
     <link rel="stylesheet" media="all" href="/css/style.css">
