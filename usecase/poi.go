@@ -26,7 +26,7 @@ type PoiData struct {
 // Show Index
 func GetPoiIndex(c echo.Context) (data PoiData) {
 	request := c.Request()
-	base := "://" + request.Host
+	base := "https://" + request.Host
 	path := request.RequestURI
 
 	data = PoiData{
@@ -49,7 +49,7 @@ func GetPoiDetail(c echo.Context) (data PoiData) {
 	note := models.NewRepo(db.Connect()).FindByID(id)
 
 	request := c.Request()
-	path := "://" + request.Host + request.RequestURI
+	path := "https://" + request.Host + request.RequestURI
 
 	data = PoiData{
 		HeaderInfo: Header{

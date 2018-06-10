@@ -10,7 +10,7 @@ func execute(e *echo.Echo) {
 	// index
 	e.GET("/", func(c echo.Context) error {
 		request := c.Request()
-		base := "://" + request.Host
+		base := "https://" + request.Host
 		path := request.RequestURI
 
 		data := usecase.PoiData{
