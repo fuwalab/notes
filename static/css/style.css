@@ -59,6 +59,8 @@ ul > li {
 }
 
 .sns-buttons {
+  width: 100%;
+  overflow: hidden;
   position: absolute;
   right: 0;
   top: 4px;
