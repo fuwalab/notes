@@ -2,10 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="keywords" content="{{ .HeaderInfo.Keywords }}">
-    <meta name="description" content="{{ .HeaderInfo.Description }}">
     <meta content="width=device-width,initial-scale=1" name="viewport">
     {{ if eq .Page "poi_detail"}}<meta name="robots" content="noindex">{{ end }}
+    {{ if ne .Page "poi_detail"}}
+    <meta name="keywords" content="{{ .HeaderInfo.Keywords }}">
+    <meta name="description" content="{{ .HeaderInfo.Description }}">
+
+    <meta property="og:title" content="{{ .HeaderInfo.Title }}">
+    <meta property="og:url" content="{{ .URL }}">
+    <meta property="og:site_name" content="photo.pics"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:description" content="{{ .HeaderInfo.Description }}">
+    <meta property="og:image" content="{{ .BaseURL }}/images/thumb.png">
+
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:site" content="@"/>
+    <meta name="twitter:creator" content="@"/>
+    <meta name="twitter:title" content="{{ .HeaderInfo.Title }}">
+    <meta name="twitter:description" content="{{ .HeaderInfo.Description }}">
+    <meta name="twitter:image" content="{{ .BaseURL }}/images/thumb.png">
+    {{ end }}
     <title>{{ .HeaderInfo.Title }}</title>
     <link rel="stylesheet" media="all" href="/css/pure-min.css">
     <link rel="stylesheet" media="all" href="/css/marketing.css">

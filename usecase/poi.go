@@ -19,11 +19,16 @@ type PoiData struct {
 	CSRFToken  string
 	Note       *models.Note
 	URL        string
+	BaseURL    string
 	Page       string
 }
 
 // Show Index
 func GetPoiIndex(c echo.Context) (data PoiData) {
+	request := c.Request()
+	base := "://" + request.Host
+	path := request.RequestURI
+
 	data = PoiData{
 		HeaderInfo: Header{
 			Title:       "ポイペ | /tmp/notes",
@@ -32,6 +37,8 @@ func GetPoiIndex(c echo.Context) (data PoiData) {
 		},
 		CSRFToken: c.Get("csrf").(string),
 		Page:      "poi",
+		BaseURL:   base,
+		URL:       base + path,
 	}
 	return
 }
