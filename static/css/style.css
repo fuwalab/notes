@@ -64,15 +64,22 @@ ul > li {
   top: 4px;
 }
 
-.fb-like {
-  top: -7px;
-}
-
 .home-menu a {
   font-size: 120%;
   color: #ffffff;
 }
 
 .pure-form {
-  margin-top: -120px;
+  margin-top: -40px;
 }
+
+.fb-like {
+  top: -3px;
+}
+
+@media (min-width: 48em) {
+  .fb-like {
+    top: -7px;
+  }
+}
+
