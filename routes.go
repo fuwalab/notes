@@ -35,7 +35,7 @@ func execute(e *echo.Echo) {
 	// Show Poi detail page
 	e.GET("/poi/:id", func(c echo.Context) error {
 		data := usecase.GetPoiDetail(c)
-		if data.Note == nil {
+		if data.Notes == nil {
 			return c.Render(http.StatusNotFound, "404", nil)
 		}
 		return c.Render(http.StatusOK, "layout", data)
@@ -49,5 +49,24 @@ func execute(e *echo.Echo) {
 			id = note.ID
 		}
 		return c.Redirect(http.StatusMovedPermanently, "/poi/"+id)
+	})
+
+	// tag list
+	e.GET("/tag/", func(c echo.Context) error {
+		data := usecase.GetTagIndex(c)
+		return c.Render(http.StatusOK, "layout", data)
+	})
+
+	//
+	e.POST("/tag/", func(c echo.Context) error {
+		tag := usecase.PostTagDetail(c)
+		return c.Redirect(http.StatusMovedPermanently, "/tag/"+tag)
+	})
+
+	// tag detail
+	e.GET("/tag/:id", func(c echo.Context) error {
+		data := usecase.GetTagDetail(c)
+
+		return c.Render(http.StatusOK, "layout", data)
 	})
 }

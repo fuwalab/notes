@@ -17,10 +17,11 @@ type Header struct {
 type PoiData struct {
 	HeaderInfo Header
 	CSRFToken  string
-	Note       *models.Note
+	Notes      []*models.Note
 	URL        string
 	BaseURL    string
 	Page       string
+	Tag        string
 }
 
 // Show Index
@@ -47,6 +48,13 @@ func GetPoiIndex(c echo.Context) (data PoiData) {
 func GetPoiDetail(c echo.Context) (data PoiData) {
 	id := c.Param("id")
 	note := models.NewRepo(db.Connect()).FindByID(id)
+	var notes []*models.Note
+
+	if note == nil {
+		notes = nil
+	} else {
+		notes = append(notes, note)
+	}
 
 	request := c.Request()
 	path := "https://" + request.Host + request.RequestURI
@@ -57,9 +65,9 @@ func GetPoiDetail(c echo.Context) (data PoiData) {
 			Keywords:    "テンプノート,/tmp/notes,一週間,期間限定,メモ,ノート,memo,note,7日間,OSS,オープンソース,ポイ,簡易メモ帳,共有,シェア,WEB,ウェブ,投稿,ポイ詳細,ポイショ",
 			Description: "表示期間限定型ウェブメモ帳「/tmp/notes（テンプノート）」のポイショ（メモ帳詳細ページ）です",
 		},
-		Note: note,
-		URL:  path,
-		Page: "poi_detail",
+		Notes: notes,
+		URL:   path,
+		Page:  "poi_detail",
 	}
 	return
 }
@@ -83,6 +91,13 @@ func PostPoiDetail(c echo.Context) *models.Note {
 		note.Title = &title
 	}
 
+	tag := requests.FormValue("tag")
+	if tag == "" {
+		note.Tag = nil
+	} else {
+		note.Tag = &tag
+	}
+
 	note.Content = requests.FormValue("content")
 	note.IP = &requests.RemoteAddr
 	note.CreatedAt = time.Now()
@@ -97,4 +112,58 @@ func PostPoiDetail(c echo.Context) *models.Note {
 		return &note
 	}
 	return nil
+}
+
+// get tag
+func GetTagIndex(c echo.Context) PoiData {
+	request := c.Request()
+	base := "https://" + request.Host
+	path := request.RequestURI
+
+	data := PoiData{
+		HeaderInfo: Header{
+			Title:       "タグリスト | /tmp/notes",
+			Keywords:    "テンプノート,/tmp/notes,一週間,期間限定,メモ,ノート,memo,note,7日間,OSS,オープンソース,ポイ,簡易メモ帳,共有,シェア,タグ",
+			Description: "タグで自分の投稿を管理できます。/tmp/notes(テンプノート)はしっかり記録するほどでもない「ちょっとだけメモを取っておきたい」をカタチにする、ウェブ投稿型のメモ帳サービスです。",
+		},
+		Page:      "tag",
+		BaseURL:   base,
+		CSRFToken: c.Get("csrf").(string),
+		URL:       base + path,
+		Tag:       "",
+	}
+
+	return data
+}
+
+func GetTagDetail(c echo.Context) PoiData {
+	tag := c.Param("id")
+	notes := models.NewRepo(db.Connect()).FindByTagName(tag)
+
+	request := c.Request()
+	base := "https://" + request.Host
+	path := request.RequestURI
+
+	data := PoiData{
+		HeaderInfo: Header{
+			Title:       "タグリスト | /tmp/notes",
+			Keywords:    "テンプノート,/tmp/notes,一週間,期間限定,メモ,ノート,memo,note,7日間,OSS,オープンソース,ポイ,簡易メモ帳,共有,シェア,タグ",
+			Description: "タグで自分の投稿を管理できます。/tmp/notes(テンプノート)はしっかり記録するほどでもない「ちょっとだけメモを取っておきたい」をカタチにする、ウェブ投稿型のメモ帳サービスです。",
+		},
+		Page:      "tag",
+		BaseURL:   base,
+		CSRFToken: c.Get("csrf").(string),
+		Notes:     notes,
+		URL:       base + path,
+		Tag:       tag,
+	}
+
+	return data
+}
+
+func PostTagDetail(c echo.Context) string {
+	request := c.Request()
+	tag := request.FormValue("tag")
+
+	return tag
 }

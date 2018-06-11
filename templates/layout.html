@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width,initial-scale=1" name="viewport">
-    {{ if eq .Page "poi_detail"}}<meta name="robots" content="noindex">{{ end }}
-    {{ if ne .Page "poi_detail"}}
+    {{ if or (eq .Page "poi_detail") (eq .Page "tag") }}<meta name="robots" content="noindex">{{ end }}
+    {{ if and (ne .Page "poi_detail") (ne .Page "tag") }}
     <meta name="keywords" content="{{ .HeaderInfo.Keywords }}">
     <meta name="description" content="{{ .HeaderInfo.Description }}">
 
@@ -34,6 +34,7 @@
 
         <ul class="pure-menu-list">
             <li class="pure-menu-item"><a href="/poi/" class="pure-menu-link">ポイする</a></li>
+            <li class="pure-menu-item"><a href="/tag/" class="pure-menu-link">タグ</a></li>
             <li class="pure-menu-item">
                 <a href="https://github.com/fuwalab/notes" class="pure-menu-link github" target="_blank">
                     <img src="/images/GitHub-Mark-Light-64px.png" alt="Github" width="32">
@@ -63,7 +64,11 @@
                     <input type="text" class="pure-input-1" placeholder="タイトル" name="title">
                 </fieldset>
                 <fieldset class="pure-group">
-                    <textarea class="pure-input-1" placeholder="メモを入力してください" name="content"></textarea>
+                    <textarea class="pure-input-1" placeholder="メモを入力してください（必須項目）" name="content"></textarea>
+                </fieldset>
+                <fieldset class="pure-group">
+                    <input type="text" class="pure-input-1" placeholder="タグ" name="tag">
+                    <small>（※できるだけ重複しない言葉を指定すると、自分だけのタグになります）</small>
                 </fieldset>
                 <input type="hidden" name="csrftoken" value="{{ .CSRFToken }}">
                 <button type="submit" class="pure-button button-secondary">ポイする</button>
@@ -75,9 +80,10 @@
     <div class="content">
         <div class="pure-g">
             <div class="l-box-lrg pure-u-1 pure-u-md-3-5">
+                {{ $note := index .Notes 0}}
                 <ul>
                     <li>
-                        <h2>{{ if .Note.Title }}{{ .Note.Title }}{{ else }}タイトルなし{{ end }}</h2>
+                        <h2>{{ if $note.Title }}{{ $note.Title }}{{ else }}タイトルなし{{ end }}</h2>
                     </li>
                     <li>
                         <a href="http://line.me/R/msg/text/?{{ .URL }}" target="_blank">
@@ -86,16 +92,58 @@
                     </li>
                     <li>
                         <small>
-                            表示期間：{{ .Note.CreatedAt | date }}〜{{ .Note.ExpireAt | date }}
+                            表示期間：{{ $note.CreatedAt | date }}〜{{ $note.ExpireAt | date }}
                         </small>
                     </li>
                     <li>
-                        <p>{{ .Note.Content | nl2br }}</p>
+                        <p>{{ $note.Content | nl2br }}</p>
                     </li>
+                    {{ if $note.Tag }}
+                    <li>
+                        <p><a href="/tag/{{ $note.Tag }}">{{ $note.Tag }}</a></p>
+                    </li>
+                    {{ end }}
                 </ul>
             </div>
         </div>
     </div>
+{{ end }}
+{{ if eq .Page "tag" }}
+<div class="content">
+    <div class="pure-g">
+        <div class="l-box-lrg pure-u-1 pure-u-md-3-5">
+            <h4>タグ</h4>
+            <p>タグの便利な使い方</p>
+            <ol>
+                <li>自分だけのタグを設定すると、自分のメモリストを作れます(※1)<br>タグのURLをブックマークなどに登録すると便利です</li>
+                <li>みんなと重複しそうなタグを設定すると、他の人のメモが見られるかもしれません</li>
+            </ol>
+            <small>※1. 他の利用者のタグと重複する可能性がありますのでご留意ください</small>
+        </div>
+
+        <div class="tag-form">
+            <form class="pure-form" method="post" action="/tag/">
+                <fieldset class="pure-group">
+                    <input type="text" class="pure-input-1" placeholder="タグ" name="tag" value="{{ .Tag }}">
+                </fieldset>
+                <input type="hidden" name="csrftoken" value="{{ .CSRFToken }}">
+                <button type="submit" class="pure-button button-secondary">検索</button>
+            </form>
+        </div>
+
+        <div class="l-box-lrg pure-u-1 pure-u-md-3-5">
+            {{ if .Notes }}
+            {{ $n := index .Notes 0 }}
+            <h4>{{ $n.Tag }}</h4>
+            <ul class="tag-list">
+            {{ range $var := .Notes }}
+                <li><small>{{ $var.CreatedAt | date }}</small><span><a href="/poi/{{ $var.ID }}">{{ $var.Title }}</a></span></li>
+            {{ end }}
+            </ul>
+            {{ end }}
+        </div>
+    </div>
+</div>
 {{ end }}
 <div class="content-wrapper">
     {{ if eq .Page "index" }}
