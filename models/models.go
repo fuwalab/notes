@@ -10,6 +10,7 @@ type Note struct {
 	ID        string        `bson:"ID,omitempty"`
 	Title     *string       `bson:"Title"`
 	Content   string        `bson:"Content,omitempty"`
+	Tag       *string       `bson:"Tag"`
 	UA        *string       `bson:"UA"`
 	IP        *string       `bson:"IP"`
 	ExpireAt  time.Time     `bson:"ExpireAt,omitempty"`

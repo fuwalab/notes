@@ -50,3 +50,21 @@ func (r *Repo) PostNote(data *Note) bool {
 	}
 	return true
 }
+
+// Retrieve Notes by Tag
+func (r *Repo) FindByTagName(tag string) (ret []*Note) {
+	err := r.db.C("notes").Find(bson.M{
+		"Tag": bson.M{
+			"$eq": tag,
+		},
+		"ExpireAt": bson.M{
+			"$gte": time.Now(),
+		},
+	}).Sort("-CreatedAt").All(&ret)
+
+	if err != nil {
+		log.Error(err.Error())
+		return nil
+	}
+	return
+}
