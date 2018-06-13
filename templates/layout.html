@@ -137,7 +137,7 @@
             <h4>{{ $n.Tag }}</h4>
             <ul class="tag-list">
             {{ range $var := .Notes }}
-                <li><small>{{ $var.CreatedAt | date }}</small><span><a href="/poi/{{ $var.ID }}">{{ $var.Title }}</a></span></li>
+                <li><small>{{ $var.CreatedAt | date }}</small><span><a href="/poi/{{ $var.ID }}">{{ if $var.Title }}{{ $var.Title }}{{ else }}タイトルなし{{ end }}</a></span></li>
             {{ end }}
             </ul>
             {{ end }}
