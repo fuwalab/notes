@@ -16,8 +16,8 @@ func execute(e *echo.Echo) {
 		data := usecase.PoiData{
 			HeaderInfo: usecase.Header{
 				Title:       "/tmp/notes | ウェブに残せるちょっとしたメモ帳",
-				Keywords:    "テンプノート,/tmp/notes,一週間,期間限定,メモ,ノート,memo,note,7日間,OSS,オープンソース,ポイ,簡易メモ帳,共有,シェア",
-				Description: "/tmp/notes(テンプノート)はしっかり記録するほどでもない「ちょっとだけメモを取っておきたい」をカタチにする、ウェブ投稿型のメモ帳サービスです。メモの閲覧可能期間は1週間。投稿から1週間が経過すると自動的に表示されなくなります。",
+				Keywords:    "ポイメモ,/tmp/notes,一週間,期間限定,メモ,ノート,memo,note,7日間,OSS,オープンソース,ポイ,簡易メモ帳,共有,シェア",
+				Description: "/tmp/notes(ポイメモ)はしっかり記録するほどでもない「ちょっとだけメモを取っておきたい」をカタチにする、ウェブ投稿型のメモ帳サービスです。メモの閲覧可能期間は1週間。投稿から1週間が経過すると自動的に表示されなくなります。",
 			},
 			Page:    "index",
 			BaseURL: base,

@@ -123,8 +123,8 @@ func GetTagIndex(c echo.Context) PoiData {
 	data := PoiData{
 		HeaderInfo: Header{
 			Title:       "タグリスト | /tmp/notes",
-			Keywords:    "テンプノート,/tmp/notes,一週間,期間限定,メモ,ノート,memo,note,7日間,OSS,オープンソース,ポイ,簡易メモ帳,共有,シェア,タグ",
-			Description: "タグで自分の投稿を管理できます。/tmp/notes(テンプノート)はしっかり記録するほどでもない「ちょっとだけメモを取っておきたい」をカタチにする、ウェブ投稿型のメモ帳サービスです。",
+			Keywords:    "ポイメモ,/tmp/notes,一週間,期間限定,メモ,ノート,memo,note,7日間,OSS,オープンソース,ポイ,簡易メモ帳,共有,シェア,タグ",
+			Description: "タグで自分の投稿を管理できます。/tmp/notes(ポイメモ)はしっかり記録するほどでもない「ちょっとだけメモを取っておきたい」をカタチにする、ウェブ投稿型のメモ帳サービスです。",
 		},
 		Page:      "tag",
 		BaseURL:   base,
@@ -147,8 +147,8 @@ func GetTagDetail(c echo.Context) PoiData {
 	data := PoiData{
 		HeaderInfo: Header{
 			Title:       "タグリスト | /tmp/notes",
-			Keywords:    "テンプノート,/tmp/notes,一週間,期間限定,メモ,ノート,memo,note,7日間,OSS,オープンソース,ポイ,簡易メモ帳,共有,シェア,タグ",
-			Description: "タグで自分の投稿を管理できます。/tmp/notes(テンプノート)はしっかり記録するほどでもない「ちょっとだけメモを取っておきたい」をカタチにする、ウェブ投稿型のメモ帳サービスです。",
+			Keywords:    "ポイメモ,/tmp/notes,一週間,期間限定,メモ,ノート,memo,note,7日間,OSS,オープンソース,ポイ,簡易メモ帳,共有,シェア,タグ",
+			Description: "タグで自分の投稿を管理できます。/tmp/notes(ポイメモ)はしっかり記録するほどでもない「ちょっとだけメモを取っておきたい」をカタチにする、ウェブ投稿型のメモ帳サービスです。",
 		},
 		Page:      "tag",
 		BaseURL:   base,
