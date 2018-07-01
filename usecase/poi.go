@@ -99,7 +99,9 @@ func PostPoiDetail(c echo.Context) *models.Note {
 	}
 
 	note.Content = requests.FormValue("content")
-	note.IP = &requests.RemoteAddr
+	ip := requests.Header.Get("X-Forwarded-For")
+	note.IP = &ip
+
 	note.CreatedAt = time.Now()
 	note.ExpireAt = time.Now().AddDate(0, 0, 7)
 
